@@ -1,9 +1,11 @@
 package com.spring.demo.controller;
 
 
+import com.spring.demo.api.response.WeatherResponse;
 import com.spring.demo.entity.Teacher;
 import com.spring.demo.repository.TeacherRepo;
 import com.spring.demo.service.TeacherService;
+import com.spring.demo.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,10 @@ public class TeacherController {
 
     @Autowired
     private TeacherRepo teacherRepo;
+
+    @Autowired
+    private WeatherService weatherService;
+
 //    @GetMapping
 //    public ResponseEntity<List<Teacher>> getAllTeachers() {
 //        return new ResponseEntity<>(teacherService.getAll(), HttpStatus.FOUND);
@@ -60,6 +66,19 @@ public class TeacherController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         teacherRepo.deleteByUsername(auth.getName());
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> weather(@RequestBody String city) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        try{
+            WeatherResponse response =  weatherService.getWeather(city);
+            return new ResponseEntity<>("The weather in " + city + " feels like " +  response.getCurrent().getFeelslike(), HttpStatus.OK);
+
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 

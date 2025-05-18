@@ -1,5 +1,6 @@
 package com.spring.demo.controller;
 
+import com.spring.demo.cache.AppCache;
 import com.spring.demo.entity.Teacher;
 import com.spring.demo.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class AdminController {
     @Autowired
     private TeacherService teacherService;
 
+    @Autowired
+    AppCache appCache;
+
     @GetMapping("/all-teacher")
     public ResponseEntity<?> getAllTeachers(){
         List<Teacher> all = teacherService.getAll();
@@ -29,6 +33,11 @@ public class AdminController {
     public ResponseEntity<?> createAdminUser(@RequestBody Teacher teacher){
         teacherService.saveNewDeanOfTeacher(teacher);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("app-cache-clear")
+    public void clearCaches() {
+        appCache.init();
     }
 
 }

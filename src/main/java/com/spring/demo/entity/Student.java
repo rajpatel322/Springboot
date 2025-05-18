@@ -19,6 +19,7 @@ public class Student {
     @NonNull
     private String name;
 
+
     @NonNull
     private String major;
 

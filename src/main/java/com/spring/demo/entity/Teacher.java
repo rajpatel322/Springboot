@@ -1,9 +1,7 @@
 package com.spring.demo.entity;
 
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -15,7 +13,9 @@ import java.util.List;
 
 @Document(collection = "teachers")
 @Data // added getter and setters
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Teacher {
 
     @Id
@@ -24,6 +24,9 @@ public class Teacher {
     @Indexed(unique = true)
     @NonNull
     private String username;
+
+    private String email;
+    private Boolean citizenship;
 
     @NonNull
     private String password;

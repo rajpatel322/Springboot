@@ -1,0 +1,10 @@
+spring:
+  config:
+    import: optional:secret.yml
+  data:
+    mongodb:
+      auto-index-creation: true
+  main:
+    allow-circular-references: true
+#spring.data.mongodb.username=username
+#spring.data.mongodb.password=password

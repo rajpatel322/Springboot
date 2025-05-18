@@ -3,15 +3,20 @@ package com.spring.demo.service;
 import com.spring.demo.entity.Student;
 import com.spring.demo.entity.Teacher;
 import com.spring.demo.repository.StudentRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
+@Slf4j
 public class StudentService {
 
     @Autowired
@@ -19,6 +24,7 @@ public class StudentService {
 
     @Autowired
     private TeacherService teacherService;
+
 
     @Transactional
     public void saveEntry(Student student, String username) {
@@ -28,7 +34,8 @@ public class StudentService {
             teacher.getStudentList().add(saved); // add the student element to teacher's studentList
             teacherService.saveEntry(teacher); // save the teacher to the database
         } catch (Exception e) {
-            System.out.println(e);
+//            System.out.println(e); // replace this with Logger
+            log.error(String.valueOf(e));
             throw new RuntimeException("An error occurred while saving the entity", e);
         }
 
